@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
       include: { college: true }
     })
 
-    return NextResponse.json({ success: true, data: saved.map(s => s.college) })
+   return NextResponse.json({ success: true, data: saved.map((s: any) => s.college) })
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }
