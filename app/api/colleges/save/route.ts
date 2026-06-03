@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-// Save a college
 export async function POST(req: NextRequest) {
   try {
     const { userId, collegeId } = await req.json()
@@ -20,7 +19,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Get saved colleges for a user
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
@@ -35,7 +33,8 @@ export async function GET(req: NextRequest) {
       include: { college: true }
     })
 
-   return NextResponse.json({ success: true, data: saved.map((s: any) => s.college) })
+    const colleges = saved.map((s: { college: any }) => s.college)
+    return NextResponse.json({ success: true, data: colleges })
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 })
   }
